@@ -5,7 +5,7 @@ import haxe.Json;
 class Localization 
 {
     public static var currentLanguage:String = "en-US";
-    public static var texts:Map<String, Map<String, String>> = {};
+    public static var texts:Map<String, Map<String, String>>;
 
     public static function loadLanguage(language:String, jsonPath:String):Void 
     {
