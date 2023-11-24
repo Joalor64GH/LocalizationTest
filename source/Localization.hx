@@ -5,6 +5,8 @@ import sys.FileSystem;
 import flixel.FlxG;
 import haxe.Json;
 
+using StringTools;
+
 class Localization 
 {
     public static var currentLanguage:String = "en-US";
@@ -15,13 +17,13 @@ class Localization
         var files:Array<String> = FileSystem.readDirectory(directory);
         for (file in files) {
             var filePath:String = '$directory/$file';
-            if (FileSystem.exists(filePath) && file.endsWith('.json')) {
+            if (FileSystem.exists(filePath) && StringTools.endsWith(file, '.json')) {
                 try {
                     var languageCode:String = file.substring(0, file.indexOf("."));
                     var jsonString:String = File.getContent(filePath);
                     texts.set(languageCode, Json.parse(jsonString));
                 } catch(e:Dynamic) {
-                    trace('uh oh! there was an error loading $filepath' + ': $e');
+                    trace('uh oh! there was an error loading $filePath' + ': $e');
                 }
             }
         }
