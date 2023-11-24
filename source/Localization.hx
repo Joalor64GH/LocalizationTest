@@ -1,5 +1,7 @@
-import openfl.utils.Assets;
-import openfl.utils.AssetType;
+#if sys
+import sys.io.File;
+import sys.FileSystem;
+#end
 import flixel.FlxG;
 import haxe.Json;
 
@@ -10,12 +12,18 @@ class Localization
 
     public static function loadLanguages(directory:String):Void 
     {
-        var languageFiles:Array<String> = Assets.list(AssetType.TEXT);
-        for (file in languageFiles) {
-            var languageCode:String = file.substring(0, file.indexOf("."));
-            var jsonString:String = Assets.getText('$directory/$file');
-            var languageMap:Map<String, String> = Json.parse(jsonString);
-            texts.set(languageCode, languageMap);
+        var files:Array<String> = FileSystem.readDirectory(directory);
+        for (file in files) {
+            var filePath:String = '$directory/$file';
+            if (FileSystem.exists(filePath) && file.endsWith('.json')) {
+                try {
+                    var languageCode:String = file.substring(0, file.indexOf("."));
+                    var jsonString:String = File.getContent(filePath);
+                    texts.set(languageCode, Json.parse(jsonString));
+                } catch(e:Dynamic) {
+                    trace('uh oh! there was an error loading $filepath' + ': $e');
+                }
+            }
         }
     }
 
