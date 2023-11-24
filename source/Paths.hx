@@ -1,8 +1,7 @@
 package;
 
-import openfl.utils.Assets as OpenFlAssets;
-
 import flixel.FlxG;
+import openfl.utils.Assets as OpenFlAssets;
 import flixel.graphics.frames.FlxAtlasFrames;
 
 class Paths
@@ -16,7 +15,6 @@ class Paths
 		var path = 'assets/$file';
 		if (currentLevel != null && OpenFlAssets.exists('$currentLevel:$path'))
 			return '$currentLevel:$path';
-
 		return path;
 	}
 
@@ -28,6 +26,11 @@ class Paths
 	inline static public function xml(key:String)
 	{
 		return file('data/$key.xml');
+	}
+
+	inline static public function json(key:String)
+	{
+		return file('data/$key.json');
 	}
 
 	inline static public function sound(key:String)
