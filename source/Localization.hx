@@ -1,4 +1,5 @@
 import openfl.utils.Assets;
+import openfl.utils.AssetType;
 import flixel.FlxG;
 import haxe.Json;
 
@@ -10,8 +11,7 @@ class Localization
     public static function loadLanguages(directory:String):Void 
     {
         var languageFiles:Array<String> = Assets.list(directory, AssetType.TEXT);
-        for (file in languageFiles) 
-        {
+        for (file in languageFiles) {
             var languageCode:String = file.substring(0, file.indexOf("."));
             var jsonString:String = Assets.getText('$directory/$file');
             var languageMap:Map<String, String> = Json.parse(jsonString);
