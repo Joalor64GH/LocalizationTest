@@ -10,7 +10,7 @@ class Localization
 
     public static function loadLanguages(directory:String):Void 
     {
-        var languageFiles:Array<String> = Assets.list(directory, AssetType.TEXT);
+        var languageFiles:Array<String> = Assets.list(AssetType.TEXT);
         for (file in languageFiles) {
             var languageCode:String = file.substring(0, file.indexOf("."));
             var jsonString:String = Assets.getText('$directory/$file');
