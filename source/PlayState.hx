@@ -12,11 +12,7 @@ class PlayState extends FlxState
 {
     override public function create()
     {
-        Localization.loadLanguage('en-US', Paths.json('langs/en-US')); // English (United States)
-        Localization.loadLanguage('es-ES', Paths.json('langs/es-ES')); // Spanish (Spain)
-        Localization.loadLanguage('fr-FR', Paths.json('langs/fr-FR')); // French (France)
-        Localization.loadLanguage('pt-BR', Paths.json('langs/pt-BR')); // Portuguese (Brazil)
-        Localization.loadLanguage('yr-HR', Paths.json('langs/yr-HR')); // Pirate Speak (Seven Seas)
+        Localization.loadLanguages(Paths.file('languages'));
 
         var greetingText = Localization.getText('greeting');
 

@@ -7,16 +7,16 @@ class Localization
     public static var currentLanguage:String = "en-US";
     public static var texts:Map<String, Map<String, String>>;
 
-    public static function loadLanguage(language:String, jsonPath:String):Void 
+    public static function loadLanguages(directory:String):Void 
     {
-        // Load JSON file
-        var jsonString = Assets.getText(jsonPath); 
-
-        // Parse JSON data
-        var languageMap:Map<String, String> = Json.parse(jsonString);
-
-        // Store language data
-        texts.set(language, languageMap);
+        var languageFiles:Array<String> = Assets.list(directory);
+        for (file in languageFiles) 
+        {
+            var languageCode:String = file.substring(0, file.indexOf("."));
+            var jsonString:String = Assets.getText('$directory/$file');
+            var languageMap:Map<String, String> = Json.parse(jsonString);
+            texts.set(languageCode, languageMap);
+        }
     }
 
     public static function getText(key:String):String 
