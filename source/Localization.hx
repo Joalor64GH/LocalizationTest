@@ -34,7 +34,7 @@ class Localization
         if (texts.exists(language)) {
             currentLanguage = language;
         } else {
-            trace('sorry! $language isnt supported!')
+            trace('sorry! $language isnt supported!');
         }
     }
 
