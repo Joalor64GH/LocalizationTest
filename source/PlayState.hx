@@ -17,12 +17,12 @@ class PlayState extends FlxState
         Localization.loadLanguages(["en-US", "es-ES", "fr-FR", "pt-BR", "yr-HR"]);
         Localization.switchLanguage("en-US"); // Default language
 
-        daText = new FlxText(0, 0, 0, Localization.getText("greeting"), 12);
+        daText = new FlxText(0, 0, 0, Localization.get("greeting"), 12);
         daText.setFormat(Paths.font("vcr.ttf"), 64, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         daText.screenCenter(XY);
         add(daText);
 
-        var daText2:FlxText = new FlxText(4, FlxG.height - 24, 0, 'Use 1-5 to switch languages.', 12);
+        var daText2:FlxText = new FlxText(4, FlxG.height - 24, 0, 'Use F1-F5 to switch languages.', 12);
         daText2.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         daText2.scrollFactor.set();
         add(daText2);
@@ -36,17 +36,17 @@ class PlayState extends FlxState
 
         final keyPressed:FlxKey = FlxG.keys.firstJustPressed();
         if (keyPressed != FlxKey.NONE) {
-            daText.text = Localization.getText('greeting');
+            daText.text = Localization.get('greeting');
             switch (keyPressed) {
-                case ONE:
+                case F1:
                     Localization.switchLanguage("en-US");
-                case TWO:
+                case F2:
                     Localization.switchLanguage("es-ES");
-                case THREE:
+                case F3:
                     Localization.switchLanguage("fr-FR");
-                case FOUR:
+                case F4:
                     Localization.switchLanguage("pt-BR");
-                case FIVE:
+                case F5:
                     Localization.switchLanguage("yr-HR");
             }
         }
