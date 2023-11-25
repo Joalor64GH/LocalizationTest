@@ -3,6 +3,7 @@ import sys.io.File;
 import sys.FileSystem;
 #end
 import flixel.FlxG;
+
 import haxe.Json;
 
 class Localization 
@@ -15,14 +16,14 @@ class Localization
         data = new Map<String, Map<String, String>>();
 
         for (language in languages) {
-            var languageData:Map<String, String> = loadLanguage(language);
+            var languageData:Map<String, String> = loadLanguageData(language);
             if (languageData != null) {
                 data.set(language, languageData);
             }
         }
     }
 
-    private static function loadLanguage(language:String):Map<String, String>
+    private static function loadLanguageData(language:String):Map<String, String>
     {
         var languageData:Map<String, String> = new Map<String, String>();
         var path:String = Paths.locale(language);
@@ -30,8 +31,13 @@ class Localization
         if (FileSystem.exists(path)) {
             var jsonContent:String = File.getContent(path);
             return Json.parse(jsonContent);
+
+            // for debugging
+            for (key in languageData.keys) {
+                trace('Successfully loaded ' + key + ' !');
+            }
         } else {
-            trace("oops! file not found for" + language + "!");
+            trace("oops! file not found for " + language + "!");
         }
 
         return null;
@@ -42,7 +48,7 @@ class Localization
         if (data.exists(language)) {
             currentLanguage = language;
         } else {
-            trace("oops!" + language + "isn't available!");
+            trace("oops!" + language + " isn't available!");
         }
     }
 
@@ -53,6 +59,6 @@ class Localization
             return languageData.get(key);
         }
 
-        return "Umm.. We didnt find" + key;
+        return "Umm.. We didnt find " + key;
     }
 }

@@ -10,12 +10,14 @@ class PlayState extends FlxState
 {
     var daText:FlxText;
 
+    var greeting:String = Localization.get("greeting");
+
     override public function create()
     {
         Localization.loadLanguages(["en-us", "es-es", "fr-fr", "pt-br", "yr-hr"]);
         Localization.switchLanguage("en-us"); // Default language
 
-        daText = new FlxText(0, 0, 0, Localization.get("greeting"), 12);
+        daText = new FlxText(0, 0, 0, greeting, 12);
         daText.setFormat(Paths.font("vcr.ttf"), 64, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         daText.screenCenter(XY);
         add(daText);
