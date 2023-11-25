@@ -12,7 +12,7 @@ class Localization
 
     public static function loadLanguages(languages:Array<String>):Void 
     {
-        data = new Map<String, Map<String, String>>;
+        data = new Map<String, Map<String, String>>();
 
         for (language in languages) {
             var languageData:Map<String, String> = loadLanguage(language);
