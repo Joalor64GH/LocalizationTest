@@ -121,7 +121,7 @@ class Localization
     {
         var targetLanguage:String = (language != null && language != "") ? language : DEFAULT_LANGUAGE;
         
-        if (data.exists(targetLanguage) && data.get(targetLanguage).exists(key)) {
+        if (data != null && data.exists(targetLanguage) && data.get(targetLanguage) != null && data.get(targetLanguage).exists(key)) {
             return data.get(targetLanguage).get(key);
         }
 
