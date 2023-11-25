@@ -3,7 +3,6 @@ import sys.io.File;
 import sys.FileSystem;
 #end
 import flixel.FlxG;
-
 import haxe.Json;
 
 class Localization 
@@ -31,11 +30,6 @@ class Localization
         if (FileSystem.exists(path)) {
             var jsonContent:String = File.getContent(path);
             return Json.parse(jsonContent);
-
-            // for debugging
-            for (key in languageData.keys) {
-                trace('Successfully loaded ' + key + ' !');
-            }
         } else {
             trace("oops! file not found for " + language + "!");
         }
