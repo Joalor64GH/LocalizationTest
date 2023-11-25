@@ -5,56 +5,54 @@ import sys.FileSystem;
 import flixel.FlxG;
 import haxe.Json;
 
-using StringTools;
-
 class Localization 
 {
-    public static var currentLanguage:String = "en-US";
-    public static var texts:Map<String, Map<String, String>>;
+    private static var data:Map<String, Map<String, String>>;
+    private static var currentLanguage:String = "en-US";
 
-    public static function loadLanguages(directory:String):Void 
+    public static function loadLanguages(languages:Array<String>):Void 
     {
-        var files:Array<String> = FileSystem.readDirectory(directory);
-        for (file in files) {
-            var filePath:String = '$directory/$file';
-            if (FileSystem.exists(filePath) && StringTools.endsWith(file, '.json')) {
-                try {
-                    var languageCode:String = file.substring(0, file.indexOf("."));
-                    var jsonString:String = File.getContent(filePath);
-                    texts.set(languageCode, Json.parse(jsonString));
-                } catch(e:Dynamic) {
-                    trace('uh oh! there was an error loading $filePath' + ': $e');
-                }
+        data = new Map<String, Map<String, String>>;
+
+        for (language in languages) {
+            var languageData:Map<String, String> = loadLanguage(language);
+            if (languageData != null) {
+                data.set(language, languageData);
             }
         }
     }
 
-    public static function getText(key:String):String 
+    private static function loadLanguage(language:String):Map<String, String>
     {
-        var languageMap = texts.get(currentLanguage);
-        if (languageMap != null) {
-            return languageMap.get(key);
+        var languageData:Map<String, String> = new Map<String, String>();
+        var path:String = Paths.locale(language);
+
+        if (FileSystem.exists(path)) {
+            var jsonContent:String = File.getContent(path);
+            return Json.parse(jsonContent);
+        } else {
+            trace("oops! file not found for $language !");
         }
-        trace('oops! it returned null!');
+
         return null;
     }
 
-    public static function switchToLanguage(language:String)
+    public static function switchLanguage(language:String)
     {
-        if (texts.exists(language)) {
+        if (data.exists(language)) {
             currentLanguage = language;
         } else {
-            trace('sorry! $language isnt supported!');
+            trace("oops! $language isn't available!");
         }
     }
 
-    public static function getLocalizedText(key:String)
+    public static function get(key:String, language:String):String
     {
-        var text:String = getText(key);
-        if (text == 'oops! it returned null!') {
-            trace('$key doesnt exist. sorry!');
-            return 'oops! it returned null!';
+        var languageData:Map<String, String> = data.get(currentLanguage);
+        if (languageData != null && languageData.exists(key)) {
+            return languageData.get(key);
         }
-        return text;
+
+        return "Umm.. We didnt find $key";
     }
 }

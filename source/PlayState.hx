@@ -1,6 +1,6 @@
 package;
 
-import flixel.ui.FlxButton;
+import flixel.input.keyboard.FlxKey;
 import flixel.util.FlxColor;
 import flixel.text.FlxText;
 import flixel.FlxState;
@@ -10,66 +10,22 @@ import Localization;
 
 class PlayState extends FlxState
 {
+    var daText:FlxText;
+
     override public function create()
     {
-        Localization.loadLanguages(Paths.file('languages'));
+        Localization.loadLanguages(["en-US", "es-ES", "fr-FR", "pt-BR", "yr-HR"]);
+        Localization.switchLanguage("en-US"); // Default language
 
-        var greetingText = Localization.getText('greeting');
-
-        var daText:FlxText = new FlxText(0, 0, 0, greetingText, 12);
+        daText = new FlxText(0, 0, 0, Localization.getText("greeting"), 12);
         daText.setFormat(Paths.font("vcr.ttf"), 64, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         daText.screenCenter(XY);
         add(daText);
 
-        var english:FlxButton = new FlxButton(15, 40, 'English', () -> 
-        {
-            Localization.switchToLanguage('en-US');
-            daText.text = Localization.getLocalizedText('greeting');
-        });
-        english.label.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-        english.label.screenCenter(XY);
-        english.scale.set(1.5, 1.5);
-        add(english);
-
-        var spanish:FlxButton = new FlxButton(15, english.y + 50, 'Spanish', () -> 
-        {
-            Localization.switchToLanguage('es-ES');
-            daText.text = Localization.getLocalizedText('greeting');
-        });
-        spanish.label.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-        spanish.label.screenCenter(XY);
-        spanish.scale.set(1.5, 1.5);
-        add(spanish);
-
-        var french:FlxButton = new FlxButton(15, spanish.y + 50, 'French', () -> 
-        {
-            Localization.switchToLanguage('fr-FR');
-            daText.text = Localization.getLocalizedText('greeting');
-        });
-        french.label.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-        french.label.screenCenter(XY);
-        french.scale.set(1.5, 1.5);
-        add(french);
-
-        var portBrazil:FlxButton = new FlxButton(15, french.y + 50, 'Portuguese (Brazil)', () -> 
-        {
-            Localization.switchToLanguage('pt-BR');
-            daText.text = Localization.getLocalizedText('greeting');
-        });
-        portBrazil.label.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-        portBrazil.label.screenCenter(XY);
-        portBrazil.scale.set(1.5, 1.5);
-        add(portBrazil);
-
-        var pirate:FlxButton = new FlxButton(15, portBrazil.y + 50, 'Pirate Speak', () -> 
-        {
-            Localization.switchToLanguage('yr-HR');
-            daText.text = Localization.getLocalizedText('greeting');
-        });
-        pirate.label.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-        pirate.label.screenCenter(XY);
-        pirate.scale.set(1.5, 1.5);
-        add(pirate);
+        var daText2:FlxText = new FlxText(4, FlxG.height - 24, 0, 'Use 1-5 to switch languages.', 12);
+        daText2.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        daText2.scrollFactor.set();
+        add(daText2);
 
         super.create();
     }
@@ -77,5 +33,22 @@ class PlayState extends FlxState
     override public function update(elapsed:Float)
     {
         super.update(elapsed);
+
+        final keyPressed:FlxKey = FlxG.keys.firstJustPressed();
+        if (keyPressed != FlxKey.NONE) {
+            daText.text = Localization.getText('greeting');
+            switch (keyPressed) {
+                case ONE:
+                    Localization.switchLanguage("en-US");
+                case TWO:
+                    Localization.switchLanguage("es-ES");
+                case THREE:
+                    Localization.switchLanguage("fr-FR");
+                case FOUR:
+                    Localization.switchLanguage("pt-BR");
+                case FIVE:
+                    Localization.switchLanguage("yr-HR");
+            }
+        }
     }
 }
