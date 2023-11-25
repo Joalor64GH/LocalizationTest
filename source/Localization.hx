@@ -16,8 +16,7 @@ class Localization
 {
     /**
      * Contains data for different languages.
-     * The outer map's key represent the language code,
-     * and the inner map contains the key-value pairs for localized strings.
+     * The outer map's key represent the language code, and the inner map contains the key-value pairs for localized strings.
      */
     private static var data:Map<String, Map<String, String>>;
 
@@ -120,11 +119,12 @@ class Localization
     {
         var targetLanguage:String = language.toLowerCase();
         var languageData:Map<String, String> = data.get(targetLanguage);
+        var localizedString:String = languageData.get(key);
         
-        if (data == null || !data.exists(targetLanguage)) {
-            return key; // Returns the key if the language doesn't exist.
+        if (data == null || languageData == null) {
+            return key; // If data or languageData map is null, returns the key itself.
         }
 
-        return languageData.exists(key) ? languageData.get(key) : key; 
+        return localizedString != null ? localizedString : key; 
     }
 }
