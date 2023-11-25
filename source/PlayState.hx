@@ -39,16 +39,16 @@ class PlayState extends FlxState
             daText.text = Localization.get('greeting');
         } else if (FlxG.keys.justPressed.TWO) {
             Localization.switchLanguage("es-es");
-            daText.text = Localization.get('greeting');
+            daText.text = Localization.get('greeting', 'es-es');
         } else if (FlxG.keys.justPressed.THREE) {
             Localization.switchLanguage("fr-fr");
-            daText.text = Localization.get('greeting');
+            daText.text = Localization.get('greeting', 'fr-fr');
         } else if (FlxG.keys.justPressed.FOUR) {
             Localization.switchLanguage("pt-br");
-            daText.text = Localization.get('greeting');
+            daText.text = Localization.get('greeting', 'pt-br');
         } else if (FlxG.keys.justPressed.FIVE) {
             Localization.switchLanguage("yr-hr");
-            daText.text = Localization.get('greeting');
+            daText.text = Localization.get('greeting', 'yr-hr');
         }
     }
 }

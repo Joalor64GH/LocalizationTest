@@ -16,7 +16,8 @@ class Localization
 {
     /**
      * Contains data for different languages.
-     * The outer map's key represent the language code, and the inner map contains the key-value pairs for localized strings.
+     * The outer map's key represent the language code,
+     * and the inner map contains the key-value pairs for localized strings.
      */
     private static var data:Map<String, Map<String, String>>;
 
@@ -108,13 +109,22 @@ class Localization
     }
 
     /**
-     * Retrieves a localized string for the specified key in the currently selected language.
-     * @param key The key corresponding to the string in the data.
-     * @return The localized string for the specified key, or an empty string if it's not found.
+     * Retrieves a localized string for a specified key in a language.
+     * But if the translation doesn't exist, it returns the key itself as a fallback.
+     * @param key The key for the text to be translated.
+     * @param language (Optional) The language code in which the translation is requested.
+     *                            If not provided, it will use the default language (en-us).
+     * @return The translated text if available, otherwise, returns the key.
      */
 
-    public static function get(key:String):String
+    public static function get(key:String, ?language:String = DEFAULT_LANGUAGE):String
     {
-        return ""; // Just a placeholder, adjust if needed
+        var targetLanguage:String = (language != null && language != "") ? language : DEFAULT_LANGUAGE;
+        
+        if (data.exists(targetLanguage) && data.get(targetLanguage).exists(key)) {
+            return data.get(targetLanguage).get(key);
+        }
+
+        return key; // Returns the key if the language doesn't exist.
     }
 }
