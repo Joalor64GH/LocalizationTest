@@ -118,8 +118,8 @@ class Localization
 
     public static function get(key:String, language:String = "en-us"):String
     {
-        var languageData:Map<String, String> = data.get(targetLanguage);
         var targetLanguage:String = language.toLowerCase();
+        var languageData:Map<String, String> = data.get(targetLanguage);
         
         if (data == null || !data.exists(targetLanguage)) {
             return key; // Returns the key if the language doesn't exist.
