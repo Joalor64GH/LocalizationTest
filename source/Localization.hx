@@ -46,7 +46,7 @@ class Localization
         }
     }
 
-    public static function get(key:String, language:String):String
+    public static function get(key:String):String
     {
         var languageData:Map<String, String> = data.get(currentLanguage);
         if (languageData != null && languageData.exists(key)) {

@@ -1,11 +1,9 @@
 package;
 
-import flixel.input.keyboard.FlxKey;
 import flixel.util.FlxColor;
 import flixel.text.FlxText;
 import flixel.FlxState;
 import flixel.FlxG;
-
 import Localization;
 
 class PlayState extends FlxState
@@ -22,7 +20,7 @@ class PlayState extends FlxState
         daText.screenCenter(XY);
         add(daText);
 
-        var daText2:FlxText = new FlxText(4, FlxG.height - 24, 0, 'Use F1-F5 to switch languages.', 12);
+        var daText2:FlxText = new FlxText(4, FlxG.height - 24, 0, 'Use 1-5 to switch languages.', 12);
         daText2.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         daText2.scrollFactor.set();
         add(daText2);
@@ -34,21 +32,21 @@ class PlayState extends FlxState
     {
         super.update(elapsed);
 
-        final keyPressed:FlxKey = FlxG.keys.firstJustPressed();
-        if (keyPressed != FlxKey.NONE) {
+        if (FlxG.keys.justPressed.ONE) {
+            Localization.switchLanguage("en-US");
             daText.text = Localization.get('greeting');
-            switch (keyPressed) {
-                case F1:
-                    Localization.switchLanguage("en-US");
-                case F2:
-                    Localization.switchLanguage("es-ES");
-                case F3:
-                    Localization.switchLanguage("fr-FR");
-                case F4:
-                    Localization.switchLanguage("pt-BR");
-                case F5:
-                    Localization.switchLanguage("yr-HR");
-            }
+        } else if (FlxG.keys.justPressed.TWO) {
+            Localization.switchLanguage("es-ES");
+            daText.text = Localization.get('greeting');
+        } else if (FlxG.keys.justPressed.THREE) {
+            Localization.switchLanguage("fr-FR");
+            daText.text = Localization.get('greeting');
+        } else if (FlxG.keys.justPressed.FOUR) {
+            Localization.switchLanguage("pt-BR");
+            daText.text = Localization.get('greeting');
+        } else if (FlxG.keys.justPressed.FIVE) {
+            Localization.switchLanguage("yr-HR");
+            daText.text = Localization.get('greeting');
         }
     }
 }
