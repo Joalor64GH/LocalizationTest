@@ -12,15 +12,15 @@ class PlayState extends FlxState
 
     override public function create()
     {
-        Localization.loadLanguages(["en-US", "es-ES", "fr-FR", "pt-BR", "yr-HR"]);
-        Localization.switchLanguage("en-US"); // Default language
+        Localization.loadLanguages(["en-us", "es-es", "fr-fr", "pt-br", "yr-hr"]);
+        Localization.switchLanguage("en-us"); // Default language
 
         daText = new FlxText(0, 0, 0, Localization.get("greeting"), 12);
         daText.setFormat(Paths.font("vcr.ttf"), 64, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         daText.screenCenter(XY);
         add(daText);
 
-        var daText2:FlxText = new FlxText(4, FlxG.height - 24, 0, 'Use 1-5 to switch languages.', 12);
+        var daText2:FlxText = new FlxText(4, FlxG.height - 24, 0, 'use 1-5 to switch languages.', 12);
         daText2.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         daText2.scrollFactor.set();
         add(daText2);
@@ -33,19 +33,19 @@ class PlayState extends FlxState
         super.update(elapsed);
 
         if (FlxG.keys.justPressed.ONE) {
-            Localization.switchLanguage("en-US");
+            Localization.switchLanguage("en-us");
             daText.text = Localization.get('greeting');
         } else if (FlxG.keys.justPressed.TWO) {
-            Localization.switchLanguage("es-ES");
+            Localization.switchLanguage("es-es");
             daText.text = Localization.get('greeting');
         } else if (FlxG.keys.justPressed.THREE) {
-            Localization.switchLanguage("fr-FR");
+            Localization.switchLanguage("fr-fr");
             daText.text = Localization.get('greeting');
         } else if (FlxG.keys.justPressed.FOUR) {
-            Localization.switchLanguage("pt-BR");
+            Localization.switchLanguage("pt-br");
             daText.text = Localization.get('greeting');
         } else if (FlxG.keys.justPressed.FIVE) {
-            Localization.switchLanguage("yr-HR");
+            Localization.switchLanguage("yr-hr");
             daText.text = Localization.get('greeting');
         }
     }

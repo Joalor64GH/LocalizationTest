@@ -8,7 +8,7 @@ import haxe.Json;
 class Localization 
 {
     private static var data:Map<String, Map<String, String>>;
-    private static var currentLanguage:String = "en-US";
+    private static var currentLanguage:String = "en-us";
 
     public static function loadLanguages(languages:Array<String>):Void 
     {
@@ -31,7 +31,7 @@ class Localization
             var jsonContent:String = File.getContent(path);
             return Json.parse(jsonContent);
         } else {
-            trace("oops! file not found for $language !");
+            trace("oops! file not found for" + language + "!");
         }
 
         return null;
@@ -42,7 +42,7 @@ class Localization
         if (data.exists(language)) {
             currentLanguage = language;
         } else {
-            trace("oops! $language isn't available!");
+            trace("oops!" + language + "isn't available!");
         }
     }
 
@@ -53,6 +53,6 @@ class Localization
             return languageData.get(key);
         }
 
-        return "Umm.. We didnt find $key";
+        return "Umm.. We didnt find" + key;
     }
 }
