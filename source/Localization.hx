@@ -117,7 +117,7 @@ class Localization
      * @return The translated text if available, otherwise, returns the key.
      */
 
-    public static function get(key:String, ?language:String = DEFAULT_LANGUAGE):String
+    public static function get(key:String, ?language:String):String
     {
         var targetLanguage:String = (language != null && language != "") ? language : DEFAULT_LANGUAGE;
         
