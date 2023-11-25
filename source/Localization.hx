@@ -37,7 +37,7 @@ class Localization
 
         for (language in languages) {
             var languageData:Map<String, String> = loadLanguageData(language);
-            if (languageData != null && !loadLanguageData(language).isEmpty()) {
+            if (languageData != null && !loadLanguageData(language).length == 0) {
                 trace("successfully loaded language: " + language + "!");
                 data.set(language, languageData);
             } else {
@@ -96,7 +96,7 @@ class Localization
         var languageData:Map<String, String> = loadLanguageData(newLanguage);
 
         // Check if the data was successfully loaded
-        if (languageData.isEmpty()) {
+        if (languageData.length == 0) {
             trace("whoops! failed to load data for: " + newLanguage);
             return false; // Failed to load data for requested language
         }
