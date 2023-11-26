@@ -96,7 +96,7 @@ class Localization
         if (languageData != null) {
             trace("yay! successfully loaded data for: " + newLanguage);
             currentLanguage = newLanguage; // Updates current language
-            data.set(language, languageData); // Sets data for new language
+            data.set(newLanguage, languageData); // Sets data for new language
             return true; // The switch was successful
         } else {
             trace("whoops! failed to load data for: " + newLanguage);
