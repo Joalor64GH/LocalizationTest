@@ -39,7 +39,7 @@ class Localization
 
         for (language in languages) {
             var languageData:Map<String, String> = loadLanguageData(language);
-            if (languageData != null && !languageData.isEmpty()) {
+            if (languageData != null && !languageData.iterator().hasNext()) {
                 trace("successfully loaded language: " + language + "!");
                 data.set(language, languageData);
             } else {
@@ -95,7 +95,7 @@ class Localization
         var languageData:Map<String, String> = loadLanguageData(newLanguage);
 
         // Check if the data was successfully loaded
-        if (languageData != null && !languageData.isEmpty()) {
+        if (languageData != null && !languageData.iterator().hasNext()) {
             trace("yay! successfully loaded data for: " + newLanguage);
             currentLanguage = newLanguage; // Updates current language
             return true; // The switch was successful
