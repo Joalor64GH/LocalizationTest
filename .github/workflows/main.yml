@@ -26,8 +26,6 @@ jobs:
           haxelib --never install flixel
           haxelib run lime setup flixel
           haxelib run lime setup
-          haxelib install flixel-addons
-          haxelib install flixel-ui
           haxelib install hxcpp-debug-server
           haxelib list
         shell: cmd

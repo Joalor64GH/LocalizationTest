@@ -1,3 +1,4 @@
 {
-    "greeting": "Olá mundo!"
+    "greeting": "Olá mundo!",
+    "instructions": "Use 1-6 para alternar os idiomas."
 }
