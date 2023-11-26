@@ -71,7 +71,7 @@ class Localization
         } else {
             // If the requested file is not found, uses the default language as a fallback
             trace("oops! file not found for: " + language + "!");
-            jsonContent = File.getContent(Paths.file("languages/" + DEFAULT_LANGUAGE + ".json"))
+            jsonContent = File.getContent(Paths.file("languages/" + DEFAULT_LANGUAGE + ".json"));
             currentLanguage = language; // Updates current language to the requested one
         }
 
