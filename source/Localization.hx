@@ -4,7 +4,6 @@ package;
 import sys.io.File;
 import sys.FileSystem;
 #end
-
 import flixel.FlxG;
 import haxe.Json;
 
@@ -21,7 +20,6 @@ class Localization
      * The outer map's key represents the language code, and the inner dynamic object contains the key-value pairs for localized strings.
      */
     private static var data:Map<String, Dynamic>;
-
     private static var currentLanguage:String; // Stores the currently selected language
     private static var DEFAULT_LANGUAGE:String = "en-us"; // The default language (English)
 
@@ -119,9 +117,11 @@ class Localization
     {
         if (data != null) {
             var targetLanguage:String = language.toLowerCase();
-            var languageData = data.get(targetLanguage);
-            if (languageData != null && Reflect.hasField(languageData, key)) {
-                return Reflect.field(languageData, key);
+            if (data.exists(targetLanguage)) {
+                var languageData = data.get(targetLanguage);
+                if (languageData != null && Reflect.hasField(languageData, key)) {
+                    return Reflect.field(languageData, key);
+                }
             }
         }
 
