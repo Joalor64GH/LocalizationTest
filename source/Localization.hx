@@ -9,7 +9,6 @@ import haxe.Json;
 
 /**
  * A simple localization system.
- * Probably better than Firetongue.
  * Please credit me if you use it!
  * @author Joalor64GH
  */
@@ -18,9 +17,9 @@ class Localization
 {
     /**
      * Contains data for different languages.
-     * The outer map's key represent the language code, and the inner map contains the key-value pairs for localized strings.
+     * The outer map's key represents the language code, and the inner dynamic object contains the key-value pairs for localized strings.
      */
-    private static var data:Map<String, Map<String, String>>;
+    private static var data:Map<String, Dynamic>;
 
     private static var currentLanguage:String; // Stores the currently selected language
     private static var DEFAULT_LANGUAGE:String = "en-us"; // The default language (English)
@@ -35,11 +34,11 @@ class Localization
     {
         var allLoaded:Bool = true;
 
-        data = new Map<String, Map<String, String>>();
+        data = new Map<String, Dynamic>();
 
         for (language in languages) {
-            var languageData:Map<String, String> = loadLanguageData(language);
-            if (languageData != null && !languageData.iterator().hasNext()) {
+            var languageData:Dynamic = loadLanguageData(language);
+            if (languageData != null) {
                 trace("successfully loaded language: " + language + "!");
                 data.set(language, languageData);
             } else {
@@ -57,7 +56,7 @@ class Localization
      * @return The map containing the parsed data.
      */
 
-    private static function loadLanguageData(language:String):Map<String, String>
+    private static function loadLanguageData(language:String):Dynamic
     {
         var jsonContent:String;
         var path:String = Paths.file("languages/" + language + ".json");
@@ -92,16 +91,17 @@ class Localization
         }
 
         // Attempt to load data for requested language
-        var languageData:Map<String, String> = loadLanguageData(newLanguage);
+        var languageData:Dynamic = loadLanguageData(newLanguage);
 
         // Check if the data was successfully loaded
-        if (languageData != null && !languageData.iterator().hasNext()) {
+        if (languageData != null) {
             trace("yay! successfully loaded data for: " + newLanguage);
             currentLanguage = newLanguage; // Updates current language
+            data.set(language, languageData); // Sets data for new language
             return true; // The switch was successful
         } else {
             trace("whoops! failed to load data for: " + newLanguage);
-            return false;
+            return false; // The switch failed
         }
 
         return false;
@@ -120,8 +120,8 @@ class Localization
 
         if (data != null && data.exists(targetLanguage)) {
             var languageData = data.get(targetLanguage);
-            if (languageData != null && languageData.exists(key)) {
-                return languageData.get(key);
+            if (languageData != null && Reflect.hasField(languageData, key)) {
+                return languageData[key];
             }
         }
 
