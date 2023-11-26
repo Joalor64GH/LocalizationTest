@@ -121,7 +121,7 @@ class Localization
         if (data != null && data.exists(targetLanguage)) {
             var languageData = data.get(targetLanguage);
             if (languageData != null && Reflect.hasField(languageData, key)) {
-                return languageData[key];
+                return Reflect.field(languageData, key);
             }
         }
 
