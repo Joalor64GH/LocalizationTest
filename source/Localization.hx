@@ -8,7 +8,10 @@ import flixel.FlxG;
 import haxe.Json;
 
 /**
- * A simple localization system
+ * A simple localization system.
+ * Probably better than Firetongue.
+ * But then again, maybe not.
+ * Please credit me if you use it!
  * @author Joalor64GH
  */
 
@@ -37,7 +40,7 @@ class Localization
 
         for (language in languages) {
             var languageData:Map<String, String> = loadLanguageData(language);
-            if (languageData != null && loadLanguageData(language) != null && !loadLanguageData(language).iterator().hasNext()) {
+            if (languageData != null && !loadLanguageData(language).iterator().hasNext()) {
                 trace("successfully loaded language: " + language + "!");
                 data.set(language, languageData);
             } else {
@@ -52,30 +55,27 @@ class Localization
     /**
      * Loads the data for the specified language, but falls back to English if it's not found.
      * @param language The language code (Example: "en-us" for English).
-     * @return The map containing the language data.
+     * @return The map containing the parsed data.
      */
 
     private static function loadLanguageData(language:String):Map<String, String>
     {
-        var languageData:Map<String, String> = new Map<String, String>();
-        var path:String = Paths.locale(language);
+        var jsonContent:String;
+        var path:String = Paths.file("languages/" + language + ".json");
 
         // Attempt to load the requested file
-        if (!FileSystem.exists(path)) {
-            // If the requested file is not found, uses the default language as a fallback
-            trace("oops! file not found for: " + language + "!");
-            path = Paths.locale(DEFAULT_LANGUAGE);
+        if (FileSystem.exists(path)) {
+            // Use the requested language if the file is found
+            jsonContent = File.getContent(path);
             currentLanguage = DEFAULT_LANGUAGE;
         } else {
-            // Use the requested language if the file is found
+            // If the requested file is not found, uses the default language as a fallback
+            trace("oops! file not found for: " + language + "!");
+            jsonContent = File.getContent(Paths.file("languages/" + DEFAULT_LANGUAGE + ".json"))
             currentLanguage = language; // Updates current language to the requested one
         }
 
-        // Load language from the determined path
-        var jsonContent:String = File.getContent(path);
-        languageData = Json.parse(jsonContent);
-
-        return languageData;
+        return Json.parse(jsonContent);
     }
 
     /**
@@ -96,7 +96,7 @@ class Localization
         var languageData:Map<String, String> = loadLanguageData(newLanguage);
 
         // Check if the data was successfully loaded
-        if (languageData == null || languageData.iterator().hasNext()) {
+        if (languageData == null || !languageData.iterator().hasNext()) {
             trace("whoops! failed to load data for: " + newLanguage);
             return false; // Failed to load data for requested language
         }

@@ -28,11 +28,6 @@ class Paths
 		return file('data/$key.xml');
 	}
 
-	inline static public function locale(key:String)
-	{
-		return file('languages/$key.json');
-	}
-
 	inline static public function sound(key:String)
 	{
 		return file('sounds/$key.$SOUND_EXT');
