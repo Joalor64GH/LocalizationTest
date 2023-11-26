@@ -119,8 +119,10 @@ class Localization
         var targetLanguage:String = language.toLowerCase();
 
         if (data != null && data.exists(targetLanguage)) {
-            var targetLanguage = data.get(targetLanguage);
-            return languageData.get(key);
+            var languageData = data.get(targetLanguage);
+            if (languageData != null && languageData.exists(key)) {
+                return languageData.get(key);
+            }
         }
 
         return key; // Returns the key itself
