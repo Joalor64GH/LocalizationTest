@@ -108,23 +108,19 @@ class Localization
     }
 
     /**
-     * Retrieves a localized string for a specified key in a language.
-     * But if the translation doesn't exist, it returns the key itself as a fallback.
-     * @param key The key for the text to be translated.
-     * @param language The language code in which the translation is requested.
-     * @return The translated text if available, otherwise, returns the key.
+     * Retrieves a localized string for a given key and language.
+     * @param key The key for the localized string.
+     * @param language The language to retrieve the string from.
+     * @return The localized string if available, otherwise, returns the key itself if not found.
      */
 
     public static function get(key:String, language:String = "en-us"):String
     {
-        var targetLanguage:String = language.toLowerCase();
-        var languageData:Map<String, String> = data.get(targetLanguage);
-        var localizedString:String = languageData.get(key);
-        
-        if (data == null || languageData == null) {
-            return key; // If data or languageData map is null, returns the key itself.
+        if (data != null && data.exists(language)) {
+            var languageData = data.get(language);
+            return languageData.get(key) || key; // If data or languageData map is null, returns the key itself.
         }
 
-        return localizedString != null ? localizedString : key; 
+        return key; 
     }
 }
