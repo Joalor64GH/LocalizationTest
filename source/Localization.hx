@@ -10,7 +10,6 @@ import haxe.Json;
 /**
  * A simple localization system.
  * Probably better than Firetongue.
- * But then again, maybe not.
  * Please credit me if you use it!
  * @author Joalor64GH
  */
@@ -40,7 +39,7 @@ class Localization
 
         for (language in languages) {
             var languageData:Map<String, String> = loadLanguageData(language);
-            if (languageData != null && !loadLanguageData(language).iterator().hasNext()) {
+            if (languageData != null && !languageData.isEmpty()) {
                 trace("successfully loaded language: " + language + "!");
                 data.set(language, languageData);
             } else {
@@ -67,12 +66,12 @@ class Localization
         if (FileSystem.exists(path)) {
             // Use the requested language if the file is found
             jsonContent = File.getContent(path);
-            currentLanguage = DEFAULT_LANGUAGE;
+            currentLanguage = language; // Updates current language to the requested one
         } else {
             // If the requested file is not found, uses the default language as a fallback
             trace("oops! file not found for: " + language + "!");
             jsonContent = File.getContent(Paths.file("languages/" + DEFAULT_LANGUAGE + ".json"));
-            currentLanguage = language; // Updates current language to the requested one
+            currentLanguage = DEFAULT_LANGUAGE;
         }
 
         return Json.parse(jsonContent);
@@ -96,15 +95,16 @@ class Localization
         var languageData:Map<String, String> = loadLanguageData(newLanguage);
 
         // Check if the data was successfully loaded
-        if (languageData == null || !languageData.iterator().hasNext()) {
+        if (languageData != null && !languageData.isEmpty()) {
+            trace("yay! successfully loaded data for: " + newLanguage);
+            currentLanguage = newLanguage; // Updates current language
+            return true; // The switch was successful
+        } else {
             trace("whoops! failed to load data for: " + newLanguage);
-            return false; // Failed to load data for requested language
+            return false;
         }
 
-        // Update current language code to the requested code
-        currentLanguage = newLanguage;
-
-        return true; // The switch was successful
+        return false;
     }
 
     /**
